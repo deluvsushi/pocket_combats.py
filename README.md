@@ -1,5 +1,5 @@
 # pocket_combats.py
-Mobile-API for PocketCombats RPG game
+Mobile-API for [PocketCombats](https://play.google.com/store/apps/details?id=com.pocketcombats) RPG game
 
 ## Example
 ```python
