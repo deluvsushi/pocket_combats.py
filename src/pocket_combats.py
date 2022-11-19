@@ -1,11 +1,12 @@
 import requests
 
 class PocketCombats:
-	def __init__(self):
+	def __init__(self) -> None:
 		self.api = "https://game.pocketcombats.com"
 		self.headers = {
 			"user-agent": "okhttp/3.10.0",
-			"content-type": "application/json"}
+			"content-type": "application/json"
+		}
 		self.auth_token = None
 
 	def register(
@@ -14,7 +15,7 @@ class PocketCombats:
 			username: str, 
 			gender: str = "MALE", 
 			sdk_version: int = 238, 
-			vendor: str = "samsung SM-N976N 7.1.2"):
+			vendor: str = "samsung SM-N976N 7.1.2") -> dict:
 		data = {
 			"gender": gender,
 			"id_token": google_id_token,
@@ -33,7 +34,7 @@ class PocketCombats:
 			username: str,
 			gender: str = "MALE",
 			sdk_version: int = 238,
-			vendor: str = "samsung SM-G9880 7.1.2"):
+			vendor: str = "samsung SM-G9880 7.1.2") -> dict:
 		data = {
 			"gender": gender,
 			"id_token": google_id_token,
@@ -46,27 +47,27 @@ class PocketCombats:
 			json=data, 
 			headers=self.headers).json()
 
-	def login_with_token(self, auth_token: str):
+	def login_with_token(self, auth_token: str) -> str:
 		self.auth_token = auth_token
 		self.headers["authorization"] = f"Bearer {self.auth_token}"
 		return self.auth_token
 
-	def get_chat_history(self):
+	def get_chat_history(self) -> dict:
 		return requests.post(
 			f"{self.api}/api/chat/history",
 			headers=self.headers).json()
 
-	def get_chat_channels(self):
+	def get_chat_channels(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/chat/channels",
 			headers=self.headers).json()
 
-	def get_current_player(self):
+	def get_current_player(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/player/self",
 			headers=self.headers).json()
 
-	def get_location_info(self):
+	def get_location_info(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/location",
 			headers=self.headers).json()
@@ -75,114 +76,131 @@ class PocketCombats:
 			self,
 			channel_id: int, 
 			text: str, 
-			last_received_id: int = 0):
+			last_received_id: int = 0) -> dict:
 		data = {
-		"channel_id": channel_id,
-		"last_received_id": last_received_id,
-		"text": text
+			"channel_id": channel_id,
+			"last_received_id": last_received_id,
+			"text": text
 		}
 		return requests.post(
 			f"{self.api}/api/chat/send",
 			data=data,
 			headers=self.headers).json()
 
-	def get_equipment(self):
+	def get_equipment(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/equipment",
 			headers=self.headers).json()
 
-	def get_skills(self):
+	def get_skills(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/skills",
 			headers=self.headers).json()
 
-	def get_backpack(self):
+	def get_backpack(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/backpack",
 			headers=self.headers).json()
 
-	def route_location(self, route_id: int):
-		data = {"routeId": route_id}
+	def route_location(self, route_id: int) -> dict:
+		data = {
+			"routeId": route_id
+		}
 		return requests.post(
 			f"{self.api}/api/location/select-route", 
 			data=data, 
 			headers=self.headers).json()
 
-	def get_quests_journal(self):
+	def get_quests_journal(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/quest/journal",
 			headers=self.headers).json()
 
-	def get_friends(self):
+	def get_friends(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/friends",
 			headers=self.headers).json()
 
-	def suggest_friends(self, username: str):
-		data = {"u": username}
+	def suggest_friends(self, username: str) -> dict:
+		data = {
+			"u": username
+		}
 		return requests.post(
 			f"{self.api}/api/friends/suggest",
 			data=data,
 			headers=self.headers).json()
 
-	def send_friend_request(self, user_id: int):
-		data = {"id": user_id}
+	def send_friend_request(self, user_id: int) -> dict:
+		data = {
+			"id": user_id
+		}
 		return requests.post(
 			f"{self.api}/api/friends/invite",
 			data=data,
 			headers=self.headers).json()
 
-	def cancel_friend_request(self, user_id: int):
-		data = {"id": user_id}
+	def cancel_friend_request(self, user_id: int) -> dict:
+		data = {
+			"id": user_id
+		}
 		return requests.post(
 			f"{self.api}/api/friends/invite/cancel",
 			data=data,
 			headers=self.headers).json()
 
-	def get_battles_history(self):
+	def get_battles_history(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/battle/history",
 			headers=self.headers).json()
 
-	def start_battle(self, id: str, hp: int, position: int):
+	def start_battle(
+			self,
+			id: str,
+			hp: int,
+			position: int) -> dict:
 		data = {
-		"id": id,
-		"hp": hp,
-		"pos": position
+			"id": id,
+			"hp": hp,
+			"pos": position
 		}
 		return requests.post(
 			f"{self.api}/api/location/attack", 
 			data=data, 
 			headers=self.headers).json()
 
-	def attack_monster(self, action_id: int, target_id: int = 0):
+	def attack_monster(
+			self,
+			action_id: int,
+			target_id: int = 0) -> dict:
 		data = {
-		"actionId": action_id,
-		"targetId": target_id
+			"actionId": action_id,
+			"targetId": target_id
 		}
 		return requests.post(
 			f"{self.api}/api/battle/current", 
 			data=data, 
 			headers=self.headers).json()
 
-	def get_current_battle(self):
+	def get_current_battle(self) -> dict:
 		return requests.get(
 			f"{self.api}/api/battle/current",
 			headers=self.headers).json()
 
-	def finish_battle(self):
+	def finish_battle(self) -> dict:
 		return requests.post(
 			f"{self.api}/api/battle/finish",
 			headers=self.headers).json()
 
-	def pick_up_item(self, item_id: int):
-		data = {"itemId": item_id}
+	def pick_up_item(self, item_id: int) -> dict:
+		data = {
+			"itemId": item_id
+		}
 		return requests.post(
 			f"{self.api}/api/location/pick-up", 
 			data=data, 
 			headers=self.headers).json()
 
-	def get_monster_info(self, name: str):
+	def get_monster_info(self, name: str) -> dict:
 		return requests.get(
 			f"{self.api}/api/location/monster/{name}", 
 			headers=self.headers).json()
